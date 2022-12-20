@@ -1,61 +1,57 @@
 <template>
   <div>
     <h1>{{title}}</h1>
-    <div class="new-note">
-      <input type="text" v-model="newNote.title">
-      <input type="text" v-model="newNote.description">
-      <button @click="addNote">Add Note</button>
-      <div v-show="message">
-        {{message}}
-      </div>
+    <new-note @addNote="addNote"/>
+    <message-component v-show="message" :message="message"/>
+    <div class="icons">
+      <svg :class="{ active: grid }" @click="grid = true" style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <svg :class="{ active: !grid }" @click="grid = false" style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg>
     </div>
-    <div class="notes">
-      <div class="note" v-for="(note, index) in notes" :key="index">
-        <div class="node-header">
-          <p>{{note.title}}</p>
-        </div>
-        <div class="note-body">
-          <p>{{note.description}}</p>
-          <span>{{note.date}}</span>
-        </div>
-      </div>
-    </div>
+    <notes-component :notes="notes" @removeNote="removeNote" :grid="grid"/>
   </div>
 </template>
 
 <script>
+import MessageComponent from "@/components/MessageComponent";
+import NewNote from "@/components/NewNote";
+import NotesComponent from "@/components/NotesComponent";
 export default {
   name: "MainComponent",
+  components: {
+    NotesComponent,
+    NewNote,
+    MessageComponent
+  },
   data() {
     return {
-      title: "Notes",
+      title: "NotesApp",
+      grid: true,
       notes: [
         {
+          id:1,
           title: "Note 1",
           description: "Description for 1 note",
           date: new Date(Date.now()).toLocaleString()
         },
         {
+          id:2,
           title: "Note 2",
           description: "Description for 2 note",
           date: new Date(Date.now()).toLocaleString()
         },
         {
+          id:3,
           title: "Note 3",
           description: "Description for 3 note",
           date: new Date(Date.now()).toLocaleString()
         },
       ],
-      newNote: {
-        title:"",
-        description:""
-      },
       message: ""
     }
   },
   methods: {
-    addNote () {
-      let {title, description} = this.newNote
+    addNote (note) {
+      let {title, description} = note
 
       if (title === "") {
         this.message = "title can't be blank"
@@ -68,19 +64,36 @@ export default {
       }
 
       this.notes.push({
+        id: Math.floor(Math.random() * 100000),
         title,
         description,
         date: new Date(Date.now()).toLocaleString()
       })
 
-      this.newNote.title = ""
-      this.newNote.description = ""
       this.message = ""
+    },
+    removeNote(id) {
+      this.notes = this.notes.filter(note => note.id !== id)
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.icons {
+  width: 100%;
+  text-align: right;
+  padding: 0 20px;
 
+  svg {
+    margin-right: 12px;
+    color: #999999;
+    &.active {
+      color: #402caf;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
 </style>
