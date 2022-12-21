@@ -35,7 +35,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .notes {
   display: flex;
   align-items: center;
@@ -70,6 +70,16 @@ export default {
   p {
     font-size: 22px;
     color: #402caf;
+  }
+  svg {
+    margin-right: 12px;
+    color: #999999;
+    &.active {
+      color: #402caf;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
   }
   &.full {
     justify-content: center;

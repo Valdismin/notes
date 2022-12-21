@@ -32,5 +32,6 @@ export default {
 <style scoped>
 .new-note {
   text-align: center;
+  margin-bottom: 50px;
 }
 </style>
