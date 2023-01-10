@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <new-note @addNote="addNote"/>
     <message-component v-show="message" :message="message"/>
     <div class="note-header">
@@ -55,19 +54,22 @@ export default {
           id: 1,
           title: "Note 1",
           description: "Description for 1 note",
-          date: new Date(Date.now()).toLocaleString()
+          date: new Date(Date.now()).toLocaleString(),
+          priority: "standard"
         },
         {
           id: 2,
           title: "Note 2",
           description: "Description for 2 note",
-          date: new Date(Date.now()).toLocaleString()
+          date: new Date(Date.now()).toLocaleString(),
+          priority: "middle"
         },
         {
           id: 3,
           title: "Note 3",
           description: "Description for 3 note",
-          date: new Date(Date.now()).toLocaleString()
+          date: new Date(Date.now()).toLocaleString(),
+          priority: "high"
         },
       ],
       message: ""
@@ -109,5 +111,9 @@ export default {
 </script>
 
 <style lang="scss">
-
+.icons {
+  display: flex;
+  margin-top: 50px;
+  margin-left: 100px;
+}
 </style>
