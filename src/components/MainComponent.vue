@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     addNote(note) {
-      let {title, description} = note
+      let {title, description, priority} = note
 
       if (title === "") {
         this.message = "title can't be blank"
@@ -93,6 +93,7 @@ export default {
         id: Math.floor(Math.random() * 100000),
         title,
         description,
+        priority,
         date: new Date(Date.now()).toLocaleString()
       })
 
